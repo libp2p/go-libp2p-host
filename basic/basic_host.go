@@ -6,15 +6,15 @@ import (
 	ma "github.com/ipfs/go-ipfs/Godeps/_workspace/src/github.com/jbenet/go-multiaddr"
 	goprocess "github.com/ipfs/go-ipfs/Godeps/_workspace/src/github.com/jbenet/goprocess"
 	context "github.com/ipfs/go-ipfs/Godeps/_workspace/src/golang.org/x/net/context"
-	metrics "github.com/ipfs/go-ipfs/metrics"
-	mstream "github.com/ipfs/go-ipfs/metrics/stream"
 	logging "github.com/ipfs/go-ipfs/vendor/go-log-v1.0.0"
+	metrics "github.com/ipfs/go-libp2p/util/metrics"
+	mstream "github.com/ipfs/go-libp2p/util/metrics/stream"
 
-	inet "github.com/ipfs/go-ipfs/p2p/net"
-	peer "github.com/ipfs/go-ipfs/p2p/peer"
-	protocol "github.com/ipfs/go-ipfs/p2p/protocol"
-	identify "github.com/ipfs/go-ipfs/p2p/protocol/identify"
-	relay "github.com/ipfs/go-ipfs/p2p/protocol/relay"
+	inet "github.com/ipfs/go-libp2p/p2p/net"
+	peer "github.com/ipfs/go-libp2p/p2p/peer"
+	protocol "github.com/ipfs/go-libp2p/p2p/protocol"
+	identify "github.com/ipfs/go-libp2p/p2p/protocol/identify"
+	relay "github.com/ipfs/go-libp2p/p2p/protocol/relay"
 )
 
 var log = logging.Logger("p2p/host/basic")
