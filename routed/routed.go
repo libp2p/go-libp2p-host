@@ -4,20 +4,21 @@ import (
 	"fmt"
 	"time"
 
-	ma "github.com/ipfs/go-ipfs/Godeps/_workspace/src/github.com/jbenet/go-multiaddr"
-	context "github.com/ipfs/go-ipfs/Godeps/_workspace/src/golang.org/x/net/context"
-	logging "github.com/ipfs/go-ipfs/vendor/go-log-v1.0.0"
-	lgbl "github.com/ipfs/go-libp2p/util/eventlog/loggables"
+	logging "QmWRypnfEwrgH4k93KEHN5hng7VjKYkWmzDYRuTZeh2Mgh/go-log"
+	ma "github.com/jbenet/go-multiaddr"
+	context "golang.org/x/net/context"
+	lgbl "util/eventlog/loggables"
 
-	routing "github.com/ipfs/go-ipfs/routing"
 	host "github.com/ipfs/go-libp2p/p2p/host"
+	metrics "github.com/ipfs/go-libp2p/p2p/metrics"
 	inet "github.com/ipfs/go-libp2p/p2p/net"
 	peer "github.com/ipfs/go-libp2p/p2p/peer"
 	protocol "github.com/ipfs/go-libp2p/p2p/protocol"
-	metrics "github.com/ipfs/go-libp2p/util/metrics"
+
+	msmux "github.com/whyrusleeping/go-multistream"
 )
 
-var log = logging.Logger("p2p/host/routed")
+var log = logging.Logger("github.com/ipfs/go-libp2p/p2p/host/routed")
 
 // AddressTTL is the expiry time for our addresses.
 // We expire them quickly.
@@ -28,10 +29,14 @@ const AddressTTL = time.Second * 10
 // it does not have them.
 type RoutedHost struct {
 	host  host.Host // embedded other host.
-	route routing.IpfsRouting
+	route Routing
 }
 
-func Wrap(h host.Host, r routing.IpfsRouting) *RoutedHost {
+type Routing interface {
+	FindPeer(context.Context, peer.ID) (peer.PeerInfo, error)
+}
+
+func Wrap(h host.Host, r Routing) *RoutedHost {
 	return &RoutedHost{h, r}
 }
 
@@ -97,7 +102,7 @@ func (rh *RoutedHost) Network() inet.Network {
 	return rh.host.Network()
 }
 
-func (rh *RoutedHost) Mux() *protocol.Mux {
+func (rh *RoutedHost) Mux() *msmux.MultistreamMuxer {
 	return rh.host.Mux()
 }
 

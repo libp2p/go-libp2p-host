@@ -1,16 +1,18 @@
 package host
 
 import (
-	ma "github.com/ipfs/go-ipfs/Godeps/_workspace/src/github.com/jbenet/go-multiaddr"
-	context "github.com/ipfs/go-ipfs/Godeps/_workspace/src/golang.org/x/net/context"
-	logging "github.com/ipfs/go-ipfs/vendor/go-log-v1.0.0"
+	logging "QmWRypnfEwrgH4k93KEHN5hng7VjKYkWmzDYRuTZeh2Mgh/go-log"
+	metrics "github.com/ipfs/go-libp2p/p2p/metrics"
 	inet "github.com/ipfs/go-libp2p/p2p/net"
 	peer "github.com/ipfs/go-libp2p/p2p/peer"
 	protocol "github.com/ipfs/go-libp2p/p2p/protocol"
-	metrics "github.com/ipfs/go-libp2p/util/metrics"
+	ma "github.com/jbenet/go-multiaddr"
+	context "golang.org/x/net/context"
+
+	msmux "github.com/whyrusleeping/go-multistream"
 )
 
-var log = logging.Logger("p2p/host")
+var log = logging.Logger("github.com/ipfs/go-libp2p/p2p/host")
 
 // Host is an object participating in a p2p network, which
 // implements protocols or provides services. It handles
@@ -31,7 +33,7 @@ type Host interface {
 	Network() inet.Network
 
 	// Mux returns the Mux multiplexing incoming streams to protocol handlers
-	Mux() *protocol.Mux
+	Mux() *msmux.MultistreamMuxer
 
 	// Connect ensures there is a connection between this host and the peer with
 	// given peer.ID. Connect will absorb the addresses in pi into its internal
