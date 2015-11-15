@@ -3,7 +3,7 @@ package basichost
 import (
 	"sync"
 
-	ma "github.com/jbenet/go-multiaddr"
+	ma "QmaA6aDzeHjZiuqBtgYRz8ZXb1qMCoyMHgyDjBEYQniUKF/go-multiaddr"
 	goprocess "github.com/jbenet/goprocess"
 	context "golang.org/x/net/context"
 

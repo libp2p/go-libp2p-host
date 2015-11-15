@@ -5,7 +5,7 @@ import (
 	"time"
 
 	logging "QmWRypnfEwrgH4k93KEHN5hng7VjKYkWmzDYRuTZeh2Mgh/go-log"
-	ma "github.com/jbenet/go-multiaddr"
+	ma "QmaA6aDzeHjZiuqBtgYRz8ZXb1qMCoyMHgyDjBEYQniUKF/go-multiaddr"
 	context "golang.org/x/net/context"
 	lgbl "util/eventlog/loggables"
 

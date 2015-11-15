@@ -4,9 +4,9 @@ import (
 	"io"
 
 	logging "QmWRypnfEwrgH4k93KEHN5hng7VjKYkWmzDYRuTZeh2Mgh/go-log"
+	ma "QmaA6aDzeHjZiuqBtgYRz8ZXb1qMCoyMHgyDjBEYQniUKF/go-multiaddr"
 	metrics "github.com/ipfs/go-libp2p/p2p/metrics"
 	mstream "github.com/ipfs/go-libp2p/p2p/metrics/stream"
-	ma "github.com/jbenet/go-multiaddr"
 	goprocess "github.com/jbenet/goprocess"
 	context "golang.org/x/net/context"
 
