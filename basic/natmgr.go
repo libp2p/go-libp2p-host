@@ -9,7 +9,7 @@ import (
 
 	inat "github.com/ipfs/go-libp2p/p2p/nat"
 	inet "github.com/ipfs/go-libp2p/p2p/net"
-	lgbl "util/eventlog/loggables"
+	lgbl "github.com/ipfs/go-libp2p/loggables"
 )
 
 // natManager takes care of adding + removing port mappings to the nat.
