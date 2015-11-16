@@ -5,8 +5,8 @@ import (
 	"time"
 
 	logging "QmWRypnfEwrgH4k93KEHN5hng7VjKYkWmzDYRuTZeh2Mgh/go-log"
+	context "QmacZi9WygGK7Me8mH53pypyscHzU386aUZXpr28GZgUct/context"
 	ma "QmbWxL1aXQhBjc1XGjGF1f2KGBMCBYSuT2ThA8YXnXJK83/go-multiaddr"
-	context "golang.org/x/net/context"
 	lgbl "util/eventlog/loggables"
 
 	host "github.com/ipfs/go-libp2p/p2p/host"

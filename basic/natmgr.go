@@ -3,9 +3,9 @@ package basichost
 import (
 	"sync"
 
+	goprocess "QmSir6qPL1tjuxd8LkR8VZq6v625ExAUVs2eCLeqQuaPGU/goprocess"
+	context "QmacZi9WygGK7Me8mH53pypyscHzU386aUZXpr28GZgUct/context"
 	ma "QmbWxL1aXQhBjc1XGjGF1f2KGBMCBYSuT2ThA8YXnXJK83/go-multiaddr"
-	goprocess "github.com/jbenet/goprocess"
-	context "golang.org/x/net/context"
 
 	inat "github.com/ipfs/go-libp2p/p2p/nat"
 	inet "github.com/ipfs/go-libp2p/p2p/net"
