@@ -16,7 +16,7 @@ import (
 	identify "github.com/ipfs/go-libp2p/p2p/protocol/identify"
 	relay "github.com/ipfs/go-libp2p/p2p/protocol/relay"
 
-	msmux "github.com/whyrusleeping/go-multistream"
+	msmux "QmdrbcnPVM2FnZQQM7p2GU91XhpuyYyd1tzPouEyh1phyD/go-multistream"
 )
 
 var log = logging.Logger("github.com/ipfs/go-libp2p/p2p/host/basic")
