@@ -3,13 +3,13 @@ package basichost
 import (
 	"sync"
 
-	goprocess "QmSir6qPL1tjuxd8LkR8VZq6v625ExAUVs2eCLeqQuaPGU/goprocess"
-	context "QmacZi9WygGK7Me8mH53pypyscHzU386aUZXpr28GZgUct/context"
-	ma "QmbWxL1aXQhBjc1XGjGF1f2KGBMCBYSuT2ThA8YXnXJK83/go-multiaddr"
+	ma "gx/QmVUi2ncqnU48zsPgR1rQosDGwY3SSZ1Ndp33j33YjXdsj/go-multiaddr"
+	context "gx/QmacZi9WygGK7Me8mH53pypyscHzU386aUZXpr28GZgUct/context"
+	goprocess "gx/QmfDXyLfKNfja2XebomRZjZ2UZCa4BDyFoCymKtzNRVQ5b/goprocess"
 
+	lgbl "github.com/ipfs/go-libp2p/loggables"
 	inat "github.com/ipfs/go-libp2p/p2p/nat"
 	inet "github.com/ipfs/go-libp2p/p2p/net"
-	lgbl "github.com/ipfs/go-libp2p/loggables"
 )
 
 // natManager takes care of adding + removing port mappings to the nat.
