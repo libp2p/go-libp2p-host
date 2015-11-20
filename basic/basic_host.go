@@ -162,8 +162,8 @@ func (h *BasicHost) RemoveStreamHandler(pid protocol.ID) {
 // header with given protocol.ID. If there is no connection to p, attempts
 // to create one. If ProtocolID is "", writes no header.
 // (Threadsafe)
-func (h *BasicHost) NewStream(pid protocol.ID, p peer.ID) (inet.Stream, error) {
-	s, err := h.Network().NewStream(p)
+func (h *BasicHost) NewStream(ctx context.Context, pid protocol.ID, p peer.ID) (inet.Stream, error) {
+	s, err := h.Network().NewStream(ctx, p)
 	if err != nil {
 		return nil, err
 	}

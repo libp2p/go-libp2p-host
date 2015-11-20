@@ -114,8 +114,8 @@ func (rh *RoutedHost) RemoveStreamHandler(pid protocol.ID) {
 	rh.host.RemoveStreamHandler(pid)
 }
 
-func (rh *RoutedHost) NewStream(pid protocol.ID, p peer.ID) (inet.Stream, error) {
-	return rh.host.NewStream(pid, p)
+func (rh *RoutedHost) NewStream(ctx context.Context, pid protocol.ID, p peer.ID) (inet.Stream, error) {
+	return rh.host.NewStream(ctx, pid, p)
 }
 func (rh *RoutedHost) Close() error {
 	// no need to close IpfsRouting. we dont own it.
