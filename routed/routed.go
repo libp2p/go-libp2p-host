@@ -5,9 +5,9 @@ import (
 	"time"
 
 	lgbl "github.com/ipfs/go-libp2p/loggables"
-	ma "gx/QmVUi2ncqnU48zsPgR1rQosDGwY3SSZ1Ndp33j33YjXdsj/go-multiaddr"
-	context "gx/QmacZi9WygGK7Me8mH53pypyscHzU386aUZXpr28GZgUct/context"
-	logging "gx/QmfZZB1aVXWA4kaR5R4e9NifERT366TTCSagkfhmAbYLsu/go-log"
+	logging "github.com/ipfs/go-log"
+	ma "github.com/jbenet/go-multiaddr"
+	context "golang.org/x/net/context"
 
 	host "github.com/ipfs/go-libp2p/p2p/host"
 	metrics "github.com/ipfs/go-libp2p/p2p/metrics"
@@ -15,7 +15,7 @@ import (
 	peer "github.com/ipfs/go-libp2p/p2p/peer"
 	protocol "github.com/ipfs/go-libp2p/p2p/protocol"
 
-	msmux "gx/QmdrbcnPVM2FnZQQM7p2GU91XhpuyYyd1tzPouEyh1phyD/go-multistream"
+	msmux "github.com/whyrusleeping/go-multistream"
 )
 
 var log = logging.Logger("github.com/ipfs/go-libp2p/p2p/host/routed")
