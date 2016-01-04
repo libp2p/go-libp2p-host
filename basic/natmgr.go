@@ -3,9 +3,9 @@ package basichost
 import (
 	"sync"
 
-	ma "github.com/jbenet/go-multiaddr"
-	goprocess "github.com/jbenet/goprocess"
-	context "golang.org/x/net/context"
+	goprocess "gx/ipfs/QmQopLATEYMNg7dVqZRNDfeE2S1yKy8zrRh5xnYiuqeZBn/goprocess"
+	ma "gx/ipfs/QmR3JkmZBKYXgNMNsNZawm914455Qof3PEopwuVSeXG7aV/go-multiaddr"
+	context "gx/ipfs/QmZy2y8t9zQH2a1b8q2ZSLKp17ATuJoCNxxyMFG5qFExpt/go-net/context"
 
 	lgbl "github.com/ipfs/go-libp2p/loggables"
 	inat "github.com/ipfs/go-libp2p/p2p/nat"

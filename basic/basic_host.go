@@ -5,10 +5,10 @@ import (
 
 	metrics "github.com/ipfs/go-libp2p/p2p/metrics"
 	mstream "github.com/ipfs/go-libp2p/p2p/metrics/stream"
-	logging "github.com/ipfs/go-log"
-	ma "github.com/jbenet/go-multiaddr"
-	goprocess "github.com/jbenet/goprocess"
-	context "golang.org/x/net/context"
+	goprocess "gx/ipfs/QmQopLATEYMNg7dVqZRNDfeE2S1yKy8zrRh5xnYiuqeZBn/goprocess"
+	ma "gx/ipfs/QmR3JkmZBKYXgNMNsNZawm914455Qof3PEopwuVSeXG7aV/go-multiaddr"
+	context "gx/ipfs/QmZy2y8t9zQH2a1b8q2ZSLKp17ATuJoCNxxyMFG5qFExpt/go-net/context"
+	logging "gx/ipfs/Qmazh5oNUVsDZTs2g59rq8aYQqwpss8tcUWQzor5sCCEuH/go-log"
 
 	inet "github.com/ipfs/go-libp2p/p2p/net"
 	peer "github.com/ipfs/go-libp2p/p2p/peer"
@@ -16,7 +16,7 @@ import (
 	identify "github.com/ipfs/go-libp2p/p2p/protocol/identify"
 	relay "github.com/ipfs/go-libp2p/p2p/protocol/relay"
 
-	msmux "github.com/whyrusleeping/go-multistream"
+	msmux "gx/ipfs/QmUeEcYJrzAEKdQXjzTxCgNZgc9sRuwharsvzzm5Gd2oGB/go-multistream"
 )
 
 var log = logging.Logger("github.com/ipfs/go-libp2p/p2p/host/basic")

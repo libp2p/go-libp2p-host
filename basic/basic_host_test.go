@@ -9,7 +9,7 @@ import (
 	protocol "github.com/ipfs/go-libp2p/p2p/protocol"
 	testutil "github.com/ipfs/go-libp2p/p2p/test/util"
 
-	context "golang.org/x/net/context"
+	context "gx/ipfs/QmZy2y8t9zQH2a1b8q2ZSLKp17ATuJoCNxxyMFG5qFExpt/go-net/context"
 )
 
 func TestHostSimple(t *testing.T) {
