@@ -5,16 +5,15 @@ import (
 
 	metrics "github.com/ipfs/go-libp2p/p2p/metrics"
 	mstream "github.com/ipfs/go-libp2p/p2p/metrics/stream"
-	goprocess "gx/ipfs/QmQopLATEYMNg7dVqZRNDfeE2S1yKy8zrRh5xnYiuqeZBn/goprocess"
-	ma "gx/ipfs/QmR3JkmZBKYXgNMNsNZawm914455Qof3PEopwuVSeXG7aV/go-multiaddr"
-	context "gx/ipfs/QmZy2y8t9zQH2a1b8q2ZSLKp17ATuJoCNxxyMFG5qFExpt/go-net/context"
-	logging "gx/ipfs/Qmazh5oNUVsDZTs2g59rq8aYQqwpss8tcUWQzor5sCCEuH/go-log"
-
 	inet "github.com/ipfs/go-libp2p/p2p/net"
 	peer "github.com/ipfs/go-libp2p/p2p/peer"
 	protocol "github.com/ipfs/go-libp2p/p2p/protocol"
 	identify "github.com/ipfs/go-libp2p/p2p/protocol/identify"
 	relay "github.com/ipfs/go-libp2p/p2p/protocol/relay"
+	goprocess "gx/ipfs/QmQopLATEYMNg7dVqZRNDfeE2S1yKy8zrRh5xnYiuqeZBn/goprocess"
+	context "gx/ipfs/QmZy2y8t9zQH2a1b8q2ZSLKp17ATuJoCNxxyMFG5qFExpt/go-net/context"
+	logging "gx/ipfs/Qmazh5oNUVsDZTs2g59rq8aYQqwpss8tcUWQzor5sCCEuH/go-log"
+	ma "gx/ipfs/QmcobAGsCjYt5DXoq9et9L8yR8er7o7Cu3DTvpaq12jYSz/go-multiaddr"
 
 	msmux "gx/ipfs/QmUeEcYJrzAEKdQXjzTxCgNZgc9sRuwharsvzzm5Gd2oGB/go-multistream"
 )
