@@ -3,10 +3,10 @@ package basichost
 import (
 	"sync"
 
-	lgbl "github.com/ipfs/go-libp2p/loggables"
 	inat "github.com/ipfs/go-libp2p/p2p/nat"
 	inet "github.com/ipfs/go-libp2p/p2p/net"
 	goprocess "gx/ipfs/QmQopLATEYMNg7dVqZRNDfeE2S1yKy8zrRh5xnYiuqeZBn/goprocess"
+	lgbl "gx/ipfs/QmSyBhZt2upyQ3NJmTpab1pX6hesA59vcYTGmgoDorZZbw/go-libp2p-loggables"
 	context "gx/ipfs/QmZy2y8t9zQH2a1b8q2ZSLKp17ATuJoCNxxyMFG5qFExpt/go-net/context"
 	ma "gx/ipfs/QmcobAGsCjYt5DXoq9et9L8yR8er7o7Cu3DTvpaq12jYSz/go-multiaddr"
 )
