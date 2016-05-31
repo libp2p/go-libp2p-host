@@ -6,6 +6,7 @@ import (
 
 	lgbl "github.com/ipfs/go-libp2p-loggables"
 	peer "github.com/ipfs/go-libp2p-peer"
+	pstore "github.com/ipfs/go-libp2p-peerstore"
 	host "github.com/ipfs/go-libp2p/p2p/host"
 	metrics "github.com/ipfs/go-libp2p/p2p/metrics"
 	inet "github.com/ipfs/go-libp2p/p2p/net"
@@ -32,7 +33,7 @@ type RoutedHost struct {
 }
 
 type Routing interface {
-	FindPeer(context.Context, peer.ID) (peer.PeerInfo, error)
+	FindPeer(context.Context, peer.ID) (pstore.PeerInfo, error)
 }
 
 func Wrap(h host.Host, r Routing) *RoutedHost {
@@ -44,7 +45,7 @@ func Wrap(h host.Host, r Routing) *RoutedHost {
 //
 // RoutedHost's Connect differs in that if the host has no addresses for a
 // given peer, it will use its routing system to try to find some.
-func (rh *RoutedHost) Connect(ctx context.Context, pi peer.PeerInfo) error {
+func (rh *RoutedHost) Connect(ctx context.Context, pi pstore.PeerInfo) error {
 	// first, check if we're already connected.
 	if len(rh.Network().ConnsToPeer(pi.ID)) > 0 {
 		return nil
@@ -52,7 +53,7 @@ func (rh *RoutedHost) Connect(ctx context.Context, pi peer.PeerInfo) error {
 
 	// if we were given some addresses, keep + use them.
 	if len(pi.Addrs) > 0 {
-		rh.Peerstore().AddAddrs(pi.ID, pi.Addrs, peer.TempAddrTTL)
+		rh.Peerstore().AddAddrs(pi.ID, pi.Addrs, pstore.TempAddrTTL)
 	}
 
 	// Check if we have some addresses in our recent memory.
@@ -89,7 +90,7 @@ func (rh *RoutedHost) ID() peer.ID {
 	return rh.host.ID()
 }
 
-func (rh *RoutedHost) Peerstore() peer.Peerstore {
+func (rh *RoutedHost) Peerstore() pstore.Peerstore {
 	return rh.host.Peerstore()
 }
 

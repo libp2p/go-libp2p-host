@@ -2,6 +2,7 @@ package host
 
 import (
 	peer "github.com/ipfs/go-libp2p-peer"
+	pstore "github.com/ipfs/go-libp2p-peerstore"
 	metrics "github.com/ipfs/go-libp2p/p2p/metrics"
 	inet "github.com/ipfs/go-libp2p/p2p/net"
 	protocol "github.com/ipfs/go-libp2p/p2p/protocol"
@@ -23,7 +24,7 @@ type Host interface {
 	ID() peer.ID
 
 	// Peerstore returns the Host's repository of Peer Addresses and Keys.
-	Peerstore() peer.Peerstore
+	Peerstore() pstore.Peerstore
 
 	// Returns the listen addresses of the Host
 	Addrs() []ma.Multiaddr
@@ -39,7 +40,7 @@ type Host interface {
 	// peerstore. If there is not an active connection, Connect will issue a
 	// h.Network.Dial, and block until a connection is open, or an error is
 	// returned. // TODO: Relay + NAT.
-	Connect(ctx context.Context, pi peer.PeerInfo) error
+	Connect(ctx context.Context, pi pstore.PeerInfo) error
 
 	// SetStreamHandler sets the protocol handler on the Host's Mux.
 	// This is equivalent to:

@@ -4,6 +4,7 @@ import (
 	"io"
 
 	peer "github.com/ipfs/go-libp2p-peer"
+	pstore "github.com/ipfs/go-libp2p-peerstore"
 	metrics "github.com/ipfs/go-libp2p/p2p/metrics"
 	mstream "github.com/ipfs/go-libp2p/p2p/metrics/stream"
 	inet "github.com/ipfs/go-libp2p/p2p/net"
@@ -122,7 +123,7 @@ func (h *BasicHost) ID() peer.ID {
 }
 
 // Peerstore returns the Host's repository of Peer Addresses and Keys.
-func (h *BasicHost) Peerstore() peer.Peerstore {
+func (h *BasicHost) Peerstore() pstore.Peerstore {
 	return h.Network().Peerstore()
 }
 
@@ -181,10 +182,10 @@ func (h *BasicHost) NewStream(ctx context.Context, pid protocol.ID, p peer.ID) (
 // peerstore. If there is not an active connection, Connect will issue a
 // h.Network.Dial, and block until a connection is open, or an error is
 // returned. // TODO: Relay + NAT.
-func (h *BasicHost) Connect(ctx context.Context, pi peer.PeerInfo) error {
+func (h *BasicHost) Connect(ctx context.Context, pi pstore.PeerInfo) error {
 
 	// absorb addresses into peerstore
-	h.Peerstore().AddAddrs(pi.ID, pi.Addrs, peer.TempAddrTTL)
+	h.Peerstore().AddAddrs(pi.ID, pi.Addrs, pstore.TempAddrTTL)
 
 	cs := h.Network().ConnsToPeer(pi.ID)
 	if len(cs) > 0 {
