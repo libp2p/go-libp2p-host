@@ -114,7 +114,8 @@ func (h *BasicHost) newStreamHandler(s inet.Stream) {
 
 	logStream := mstream.WrapStream(s, protocol.ID(protoID), h.bwc)
 
-	go handle(logStream)
+	s.SetProtocol(protoID)
+	go handle(protoID, logStream)
 }
 
 // ID returns the (local) peer.ID associated with this Host
@@ -147,8 +148,10 @@ func (h *BasicHost) IDService() *identify.IDService {
 //   host.Mux().SetHandler(proto, handler)
 // (Threadsafe)
 func (h *BasicHost) SetStreamHandler(pid protocol.ID, handler inet.StreamHandler) {
-	h.Mux().AddHandler(string(pid), func(rwc io.ReadWriteCloser) error {
-		handler(rwc.(inet.Stream))
+	h.Mux().AddHandler(string(pid), func(p string, rwc io.ReadWriteCloser) error {
+		is := rwc.(inet.Stream)
+		is.SetProtocol(p)
+		handler(is)
 		return nil
 	})
 }
