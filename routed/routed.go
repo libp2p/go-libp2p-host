@@ -7,18 +7,18 @@ import (
 	lgbl "github.com/ipfs/go-libp2p-loggables"
 	peer "github.com/ipfs/go-libp2p-peer"
 	pstore "github.com/ipfs/go-libp2p-peerstore"
-	host "github.com/ipfs/go-libp2p/p2p/host"
-	metrics "github.com/ipfs/go-libp2p/p2p/metrics"
-	inet "github.com/ipfs/go-libp2p/p2p/net"
-	protocol "github.com/ipfs/go-libp2p/p2p/protocol"
 	logging "github.com/ipfs/go-log"
 	ma "github.com/jbenet/go-multiaddr"
+	host "github.com/libp2p/go-libp2p/p2p/host"
+	metrics "github.com/libp2p/go-libp2p/p2p/metrics"
+	inet "github.com/libp2p/go-libp2p/p2p/net"
+	protocol "github.com/libp2p/go-libp2p/p2p/protocol"
 	context "golang.org/x/net/context"
 
 	msmux "github.com/whyrusleeping/go-multistream"
 )
 
-var log = logging.Logger("github.com/ipfs/go-libp2p/p2p/host/routed")
+var log = logging.Logger("github.com/libp2p/go-libp2p/p2p/host/routed")
 
 // AddressTTL is the expiry time for our addresses.
 // We expire them quickly.

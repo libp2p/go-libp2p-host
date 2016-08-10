@@ -5,9 +5,9 @@ import (
 	"io"
 	"testing"
 
-	inet "github.com/ipfs/go-libp2p/p2p/net"
-	protocol "github.com/ipfs/go-libp2p/p2p/protocol"
-	testutil "github.com/ipfs/go-libp2p/p2p/test/util"
+	inet "github.com/libp2p/go-libp2p/p2p/net"
+	protocol "github.com/libp2p/go-libp2p/p2p/protocol"
+	testutil "github.com/libp2p/go-libp2p/p2p/test/util"
 
 	context "golang.org/x/net/context"
 )
