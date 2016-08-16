@@ -110,6 +110,10 @@ func (rh *RoutedHost) SetStreamHandler(pid protocol.ID, handler inet.StreamHandl
 	rh.host.SetStreamHandler(pid, handler)
 }
 
+func (rh *RoutedHost) SetStreamHandlerMatch(pid protocol.ID, m func(string) bool, handler inet.StreamHandler) {
+	rh.host.SetStreamHandlerMatch(pid, m, handler)
+}
+
 func (rh *RoutedHost) RemoveStreamHandler(pid protocol.ID) {
 	rh.host.RemoveStreamHandler(pid)
 }
@@ -125,3 +129,5 @@ func (rh *RoutedHost) Close() error {
 func (rh *RoutedHost) GetBandwidthReporter() metrics.Reporter {
 	return rh.host.GetBandwidthReporter()
 }
+
+var _ (host.Host) = (*RoutedHost)(nil)

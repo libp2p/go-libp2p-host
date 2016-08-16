@@ -156,6 +156,17 @@ func (h *BasicHost) SetStreamHandler(pid protocol.ID, handler inet.StreamHandler
 	})
 }
 
+// SetStreamHandlerMatch sets the protocol handler on the Host's Mux
+// using a matching function to do protocol comparisons
+func (h *BasicHost) SetStreamHandlerMatch(pid protocol.ID, m func(string) bool, handler inet.StreamHandler) {
+	h.Mux().AddHandlerWithFunc(string(pid), m, func(p string, rwc io.ReadWriteCloser) error {
+		is := rwc.(inet.Stream)
+		is.SetProtocol(p)
+		handler(is)
+		return nil
+	})
+}
+
 // RemoveStreamHandler returns ..
 func (h *BasicHost) RemoveStreamHandler(pid protocol.ID) {
 	h.Mux().RemoveHandler(string(pid))

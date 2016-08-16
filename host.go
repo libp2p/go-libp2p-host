@@ -48,6 +48,10 @@ type Host interface {
 	// (Threadsafe)
 	SetStreamHandler(pid protocol.ID, handler inet.StreamHandler)
 
+	// SetStreamHandlerMatch sets the protocol handler on the Host's Mux
+	// using a matching function for protocol selection.
+	SetStreamHandlerMatch(protocol.ID, func(string) bool, inet.StreamHandler)
+
 	// RemoveStreamHandler removes a handler on the mux that was set by
 	// SetStreamHandler
 	RemoveStreamHandler(pid protocol.ID)
