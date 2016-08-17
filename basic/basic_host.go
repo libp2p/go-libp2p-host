@@ -207,7 +207,17 @@ func (h *BasicHost) preferredProtocol(p peer.ID, pids []protocol.ID) protocol.ID
 
 	prefs, ok := h.protoPrefs[p]
 	if !ok {
-		return ""
+		supported, err := h.Peerstore().GetProtocols(p)
+		if err != nil {
+			log.Warningf("error getting protocol for peer %s: %s", p, err)
+			return ""
+		}
+
+		prefs = make(map[protocol.ID]struct{})
+		for _, proto := range supported {
+			prefs[protocol.ID(proto)] = struct{}{}
+		}
+		h.protoPrefs[p] = prefs
 	}
 
 	for _, pid := range pids {
