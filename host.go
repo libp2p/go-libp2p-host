@@ -60,7 +60,7 @@ type Host interface {
 	// header with given protocol.ID. If there is no connection to p, attempts
 	// to create one. If ProtocolID is "", writes no header.
 	// (Threadsafe)
-	NewStream(ctx context.Context, pid protocol.ID, p peer.ID) (inet.Stream, error)
+	NewStream(ctx context.Context, p peer.ID, pids ...protocol.ID) (inet.Stream, error)
 
 	// Close shuts down the host, its Network, and services.
 	Close() error

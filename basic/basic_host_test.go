@@ -32,7 +32,7 @@ func TestHostSimple(t *testing.T) {
 		io.Copy(w, s) // mirror everything
 	})
 
-	s, err := h1.NewStream(ctx, protocol.TestingID, h2pi.ID)
+	s, err := h1.NewStream(ctx, h2pi.ID, protocol.TestingID)
 	if err != nil {
 		t.Fatal(err)
 	}

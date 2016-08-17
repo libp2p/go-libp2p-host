@@ -2,6 +2,7 @@ package basichost
 
 import (
 	"io"
+	"sync"
 
 	peer "github.com/ipfs/go-libp2p-peer"
 	pstore "github.com/ipfs/go-libp2p-peerstore"
@@ -46,6 +47,9 @@ type BasicHost struct {
 	relay   *relay.RelayService
 	natmgr  *natManager
 
+	protoPrefs map[peer.ID]map[protocol.ID]struct{}
+	prefsLk    sync.Mutex
+
 	proc goprocess.Process
 
 	bwc metrics.Reporter
@@ -54,9 +58,10 @@ type BasicHost struct {
 // New constructs and sets up a new *BasicHost with given Network
 func New(net inet.Network, opts ...interface{}) *BasicHost {
 	h := &BasicHost{
-		network: net,
-		mux:     msmux.NewMultistreamMuxer(),
-		bwc:     metrics.NewBandwidthCounter(),
+		network:    net,
+		mux:        msmux.NewMultistreamMuxer(),
+		bwc:        metrics.NewBandwidthCounter(),
+		protoPrefs: make(map[peer.ID]map[protocol.ID]struct{}),
 	}
 
 	h.proc = goprocess.WithTeardown(func() error {
@@ -176,7 +181,58 @@ func (h *BasicHost) RemoveStreamHandler(pid protocol.ID) {
 // header with given protocol.ID. If there is no connection to p, attempts
 // to create one. If ProtocolID is "", writes no header.
 // (Threadsafe)
-func (h *BasicHost) NewStream(ctx context.Context, pid protocol.ID, p peer.ID) (inet.Stream, error) {
+func (h *BasicHost) NewStream(ctx context.Context, p peer.ID, pids ...protocol.ID) (inet.Stream, error) {
+	pref := h.preferredProtocol(p, pids)
+	if pref != "" {
+		return h.newStream(ctx, p, pref)
+	}
+
+	var lastErr error
+	for _, pid := range pids {
+		s, err := h.newStream(ctx, p, pid)
+		if err == nil {
+			h.setPreferredProtocol(p, pid)
+			return s, nil
+		}
+		lastErr = err
+		log.Infof("NewStream to %s for %s failed: %s", p, pid, err)
+	}
+
+	return nil, lastErr
+}
+
+func (h *BasicHost) preferredProtocol(p peer.ID, pids []protocol.ID) protocol.ID {
+	h.prefsLk.Lock()
+	defer h.prefsLk.Unlock()
+
+	prefs, ok := h.protoPrefs[p]
+	if !ok {
+		return ""
+	}
+
+	for _, pid := range pids {
+		if _, ok := prefs[pid]; ok {
+			return pid
+		}
+	}
+
+	return ""
+}
+
+func (h *BasicHost) setPreferredProtocol(p peer.ID, proto protocol.ID) {
+	h.prefsLk.Lock()
+	defer h.prefsLk.Unlock()
+
+	prefs, ok := h.protoPrefs[p]
+	if !ok {
+		prefs = make(map[protocol.ID]struct{})
+		h.protoPrefs[p] = prefs
+	}
+
+	prefs[proto] = struct{}{}
+}
+
+func (h *BasicHost) newStream(ctx context.Context, p peer.ID, pid protocol.ID) (inet.Stream, error) {
 	s, err := h.Network().NewStream(ctx, p)
 	if err != nil {
 		return nil, err
