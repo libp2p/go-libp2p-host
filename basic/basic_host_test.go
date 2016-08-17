@@ -194,6 +194,9 @@ func TestHostProtoPreknowledge(t *testing.T) {
 	defer h1.Close()
 	defer h2.Close()
 
+	// wait for identify handshake to finish completely
+	time.Sleep(time.Millisecond * 20)
+
 	h1.SetStreamHandler("/foo", handler)
 
 	s, err := h2.NewStream(ctx, h1.ID(), "/foo", "/bar", "/super")
@@ -202,8 +205,8 @@ func TestHostProtoPreknowledge(t *testing.T) {
 	}
 
 	select {
-	case <-conn:
-		t.Fatal("shouldnt have gotten connection yet, we should have a lazy stream")
+	case p := <-conn:
+		t.Fatal("shouldnt have gotten connection yet, we should have a lazy stream: ", p)
 	case <-time.After(time.Millisecond * 50):
 	}
 
