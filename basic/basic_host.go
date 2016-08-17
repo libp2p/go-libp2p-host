@@ -190,12 +190,21 @@ func (h *BasicHost) NewStream(ctx context.Context, p peer.ID, pids ...protocol.I
 	var lastErr error
 	for _, pid := range pids {
 		s, err := h.newStream(ctx, p, pid)
-		if err == nil {
-			h.setPreferredProtocol(p, pid)
-			return s, nil
+		if err != nil {
+			lastErr = err
+			log.Infof("NewStream to %s for %s failed: %s", p, pid, err)
+			continue
 		}
-		lastErr = err
-		log.Infof("NewStream to %s for %s failed: %s", p, pid, err)
+
+		_, err = s.Read(nil)
+		if err != nil {
+			lastErr = err
+			log.Infof("NewStream to %s for %s failed (on read): %s", p, pid, err)
+			continue
+		}
+
+		h.setPreferredProtocol(p, pid)
+		return s, nil
 	}
 
 	return nil, lastErr
@@ -247,6 +256,8 @@ func (h *BasicHost) newStream(ctx context.Context, p peer.ID, pid protocol.ID) (
 	if err != nil {
 		return nil, err
 	}
+
+	s.SetProtocol(string(pid))
 
 	logStream := mstream.WrapStream(s, pid, h.bwc)
 
