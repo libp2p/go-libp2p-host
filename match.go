@@ -1,13 +1,14 @@
 package host
 
 import (
+	"github.com/libp2p/go-libp2p/p2p/protocol"
 	"strings"
 
 	semver "github.com/coreos/go-semver/semver"
 )
 
-func MultistreamSemverMatcher(base string) (func(string) bool, error) {
-	parts := strings.Split(base, "/")
+func MultistreamSemverMatcher(base protocol.ID) (func(string) bool, error) {
+	parts := strings.Split(string(base), "/")
 	vers, err := semver.NewVersion(parts[len(parts)-1])
 	if err != nil {
 		return nil, err

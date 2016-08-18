@@ -116,10 +116,10 @@ func (h *BasicHost) newStreamHandler(s inet.Stream) {
 		}
 		return
 	}
+	s.SetProtocol(protocol.ID(protoID))
 
-	logStream := mstream.WrapStream(s, protocol.ID(protoID), h.bwc)
+	logStream := mstream.WrapStream(s, h.bwc)
 
-	s.SetProtocol(protoID)
 	go handle(protoID, logStream)
 }
 
@@ -155,7 +155,7 @@ func (h *BasicHost) IDService() *identify.IDService {
 func (h *BasicHost) SetStreamHandler(pid protocol.ID, handler inet.StreamHandler) {
 	h.Mux().AddHandler(string(pid), func(p string, rwc io.ReadWriteCloser) error {
 		is := rwc.(inet.Stream)
-		is.SetProtocol(p)
+		is.SetProtocol(protocol.ID(p))
 		handler(is)
 		return nil
 	})
@@ -166,7 +166,7 @@ func (h *BasicHost) SetStreamHandler(pid protocol.ID, handler inet.StreamHandler
 func (h *BasicHost) SetStreamHandlerMatch(pid protocol.ID, m func(string) bool, handler inet.StreamHandler) {
 	h.Mux().AddHandlerWithFunc(string(pid), m, func(p string, rwc io.ReadWriteCloser) error {
 		is := rwc.(inet.Stream)
-		is.SetProtocol(p)
+		is.SetProtocol(protocol.ID(p))
 		handler(is)
 		return nil
 	})
@@ -187,27 +187,26 @@ func (h *BasicHost) NewStream(ctx context.Context, p peer.ID, pids ...protocol.I
 		return h.newStream(ctx, p, pref)
 	}
 
-	var lastErr error
+	var protoStrs []string
 	for _, pid := range pids {
-		s, err := h.newStream(ctx, p, pid)
-		if err != nil {
-			lastErr = err
-			log.Infof("NewStream to %s for %s failed: %s", p, pid, err)
-			continue
-		}
-
-		_, err = s.Read(nil)
-		if err != nil {
-			lastErr = err
-			log.Infof("NewStream to %s for %s failed (on read): %s", p, pid, err)
-			continue
-		}
-
-		h.setPreferredProtocol(p, pid)
-		return s, nil
+		protoStrs = append(protoStrs, string(pid))
 	}
 
-	return nil, lastErr
+	s, err := h.Network().NewStream(ctx, p)
+	if err != nil {
+		return nil, err
+	}
+
+	selected, err := msmux.SelectOneOf(protoStrs, s)
+	if err != nil {
+		s.Close()
+		return nil, err
+	}
+	selpid := protocol.ID(selected)
+	s.SetProtocol(selpid)
+	h.setPreferredProtocol(p, selpid)
+
+	return mstream.WrapStream(s, h.bwc), nil
 }
 
 func (h *BasicHost) preferredProtocol(p peer.ID, pids []protocol.ID) protocol.ID {
@@ -257,9 +256,9 @@ func (h *BasicHost) newStream(ctx context.Context, p peer.ID, pid protocol.ID) (
 		return nil, err
 	}
 
-	s.SetProtocol(string(pid))
+	s.SetProtocol(pid)
 
-	logStream := mstream.WrapStream(s, pid, h.bwc)
+	logStream := mstream.WrapStream(s, h.bwc)
 
 	lzcon := msmux.NewMSSelect(logStream, string(pid))
 	return &streamWrapper{

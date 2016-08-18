@@ -76,7 +76,7 @@ func getHostPair(ctx context.Context, t *testing.T) (host.Host, host.Host) {
 	return h1, h2
 }
 
-func assertWait(t *testing.T, c chan string, exp string) {
+func assertWait(t *testing.T, c chan protocol.ID, exp protocol.ID) {
 	select {
 	case proto := <-c:
 		if proto != exp {
@@ -99,7 +99,7 @@ func TestHostProtoPreference(t *testing.T) {
 	protoNew := protocol.ID("/testing/1.1.0")
 	protoMinor := protocol.ID("/testing/1.2.0")
 
-	connectedOn := make(chan string, 16)
+	connectedOn := make(chan protocol.ID, 16)
 
 	handler := func(s inet.Stream) {
 		connectedOn <- s.Protocol()
@@ -113,10 +113,10 @@ func TestHostProtoPreference(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	assertWait(t, connectedOn, string(protoOld))
+	assertWait(t, connectedOn, protoOld)
 	s.Close()
 
-	mfunc, err := host.MultistreamSemverMatcher(string(protoMinor))
+	mfunc, err := host.MultistreamSemverMatcher(protoMinor)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -135,7 +135,7 @@ func TestHostProtoPreference(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	assertWait(t, connectedOn, string(protoOld))
+	assertWait(t, connectedOn, protoOld)
 
 	s2.Close()
 
@@ -144,12 +144,7 @@ func TestHostProtoPreference(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	_, err = s3.Read(nil)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	assertWait(t, connectedOn, string(protoMinor))
+	assertWait(t, connectedOn, protoMinor)
 	s3.Close()
 }
 
@@ -179,7 +174,7 @@ func TestHostProtoPreknowledge(t *testing.T) {
 	h1 := testutil.GenHostSwarm(t, ctx)
 	h2 := testutil.GenHostSwarm(t, ctx)
 
-	conn := make(chan string, 16)
+	conn := make(chan protocol.ID, 16)
 	handler := func(s inet.Stream) {
 		conn <- s.Protocol()
 		s.Close()
