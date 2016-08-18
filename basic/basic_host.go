@@ -2,6 +2,7 @@ package basichost
 
 import (
 	"io"
+	"time"
 
 	peer "github.com/ipfs/go-libp2p-peer"
 	pstore "github.com/ipfs/go-libp2p-peerstore"
@@ -102,20 +103,29 @@ func (h *BasicHost) newConnHandler(c inet.Conn) {
 // newStreamHandler is the remote-opened stream handler for inet.Network
 // TODO: this feels a bit wonky
 func (h *BasicHost) newStreamHandler(s inet.Stream) {
+	before := time.Now()
 	protoID, handle, err := h.Mux().Negotiate(s)
+	took := time.Now().Sub(before)
 	if err != nil {
 		if err == io.EOF {
-			log.Debugf("protocol EOF: %s", s.Conn().RemotePeer())
+			logf := log.Debugf
+			if took > time.Second*10 {
+				logf = log.Warningf
+			}
+			logf("protocol EOF: %s (took %s)", s.Conn().RemotePeer(), took)
 		} else {
-			log.Warning("protocol mux failed: %s", err)
+			log.Warning("protocol mux failed: %s (took %s)", err, took)
 		}
 		return
 	}
 	s.SetProtocol(protocol.ID(protoID))
 
-	logStream := mstream.WrapStream(s, h.bwc)
+	if h.bwc != nil {
+		s = mstream.WrapStream(s, h.bwc)
+	}
+	log.Debugf("protocol negotiation took %s", took)
 
-	go handle(protoID, logStream)
+	go handle(protoID, s)
 }
 
 // ID returns the (local) peer.ID associated with this Host
