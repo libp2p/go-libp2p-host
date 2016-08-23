@@ -2,7 +2,6 @@ package basichost
 
 import (
 	"io"
-	"sync"
 
 	peer "github.com/ipfs/go-libp2p-peer"
 	pstore "github.com/ipfs/go-libp2p-peerstore"
@@ -47,9 +46,6 @@ type BasicHost struct {
 	relay   *relay.RelayService
 	natmgr  *natManager
 
-	protoPrefs map[peer.ID]map[protocol.ID]struct{}
-	prefsLk    sync.Mutex
-
 	proc goprocess.Process
 
 	bwc metrics.Reporter
@@ -58,10 +54,9 @@ type BasicHost struct {
 // New constructs and sets up a new *BasicHost with given Network
 func New(net inet.Network, opts ...interface{}) *BasicHost {
 	h := &BasicHost{
-		network:    net,
-		mux:        msmux.NewMultistreamMuxer(),
-		bwc:        metrics.NewBandwidthCounter(),
-		protoPrefs: make(map[peer.ID]map[protocol.ID]struct{}),
+		network: net,
+		mux:     msmux.NewMultistreamMuxer(),
+		bwc:     metrics.NewBandwidthCounter(),
 	}
 
 	h.proc = goprocess.WithTeardown(func() error {
@@ -182,7 +177,11 @@ func (h *BasicHost) RemoveStreamHandler(pid protocol.ID) {
 // to create one. If ProtocolID is "", writes no header.
 // (Threadsafe)
 func (h *BasicHost) NewStream(ctx context.Context, p peer.ID, pids ...protocol.ID) (inet.Stream, error) {
-	pref := h.preferredProtocol(p, pids)
+	pref, err := h.preferredProtocol(p, pids)
+	if err != nil {
+		return nil, err
+	}
+
 	if pref != "" {
 		return h.newStream(ctx, p, pref)
 	}
@@ -204,50 +203,31 @@ func (h *BasicHost) NewStream(ctx context.Context, p peer.ID, pids ...protocol.I
 	}
 	selpid := protocol.ID(selected)
 	s.SetProtocol(selpid)
-	h.setPreferredProtocol(p, selpid)
+	h.Peerstore().AddProtocols(p, selected)
 
 	return mstream.WrapStream(s, h.bwc), nil
 }
 
-func (h *BasicHost) preferredProtocol(p peer.ID, pids []protocol.ID) protocol.ID {
-	h.prefsLk.Lock()
-	defer h.prefsLk.Unlock()
-
-	prefs, ok := h.protoPrefs[p]
-	if !ok {
-		supported, err := h.Peerstore().GetProtocols(p)
-		if err != nil {
-			log.Warningf("error getting protocol for peer %s: %s", p, err)
-			return ""
-		}
-
-		prefs = make(map[protocol.ID]struct{})
-		for _, proto := range supported {
-			prefs[protocol.ID(proto)] = struct{}{}
-		}
-		h.protoPrefs[p] = prefs
+func pidsToStrings(pids []protocol.ID) []string {
+	out := make([]string, len(pids))
+	for i, p := range pids {
+		out[i] = string(p)
 	}
-
-	for _, pid := range pids {
-		if _, ok := prefs[pid]; ok {
-			return pid
-		}
-	}
-
-	return ""
+	return out
 }
 
-func (h *BasicHost) setPreferredProtocol(p peer.ID, proto protocol.ID) {
-	h.prefsLk.Lock()
-	defer h.prefsLk.Unlock()
-
-	prefs, ok := h.protoPrefs[p]
-	if !ok {
-		prefs = make(map[protocol.ID]struct{})
-		h.protoPrefs[p] = prefs
+func (h *BasicHost) preferredProtocol(p peer.ID, pids []protocol.ID) (protocol.ID, error) {
+	pidstrs := pidsToStrings(pids)
+	supported, err := h.Peerstore().SupportsProtocols(p, pidstrs...)
+	if err != nil {
+		return "", err
 	}
 
-	prefs[proto] = struct{}{}
+	var out protocol.ID
+	if len(supported) > 0 {
+		out = protocol.ID(supported[0])
+	}
+	return out, nil
 }
 
 func (h *BasicHost) newStream(ctx context.Context, p peer.ID, pid protocol.ID) (inet.Stream, error) {
