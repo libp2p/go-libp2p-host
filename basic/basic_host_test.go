@@ -214,3 +214,31 @@ func TestHostProtoPreknowledge(t *testing.T) {
 
 	s.Close()
 }
+
+func TestNewDialOld(t *testing.T) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	h1, h2 := getHostPair(ctx, t)
+	defer h1.Close()
+	defer h2.Close()
+
+	connectedOn := make(chan protocol.ID, 16)
+	h1.SetStreamHandler("/testing", func(s inet.Stream) {
+		connectedOn <- s.Protocol()
+		s.Close()
+	})
+
+	s, err := h2.NewStream(ctx, h1.ID(), "/testing/1.0.0", "/testing")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	assertWait(t, connectedOn, "/testing")
+
+	if s.Protocol() != "/testing" {
+		t.Fatal("shoould have gotten /testing")
+	}
+
+	s.Close()
+}
