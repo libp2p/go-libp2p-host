@@ -1,6 +1,7 @@
 package basichost
 
 import (
+	"context"
 	"sync"
 
 	lgbl "github.com/ipfs/go-libp2p-loggables"
@@ -8,7 +9,6 @@ import (
 	goprocess "github.com/jbenet/goprocess"
 	inat "github.com/libp2p/go-libp2p/p2p/nat"
 	inet "github.com/libp2p/go-libp2p/p2p/net"
-	context "golang.org/x/net/context"
 )
 
 // natManager takes care of adding + removing port mappings to the nat.

@@ -1,6 +1,7 @@
 package basichost
 
 import (
+	"context"
 	"io"
 	"time"
 
@@ -15,7 +16,6 @@ import (
 	protocol "github.com/libp2p/go-libp2p/p2p/protocol"
 	identify "github.com/libp2p/go-libp2p/p2p/protocol/identify"
 	relay "github.com/libp2p/go-libp2p/p2p/protocol/relay"
-	context "golang.org/x/net/context"
 
 	msmux "github.com/whyrusleeping/go-multistream"
 )

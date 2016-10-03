@@ -1,6 +1,7 @@
 package routedhost
 
 import (
+	"context"
 	"fmt"
 	"time"
 
@@ -13,7 +14,6 @@ import (
 	metrics "github.com/libp2p/go-libp2p/p2p/metrics"
 	inet "github.com/libp2p/go-libp2p/p2p/net"
 	protocol "github.com/libp2p/go-libp2p/p2p/protocol"
-	context "golang.org/x/net/context"
 
 	msmux "github.com/whyrusleeping/go-multistream"
 )
