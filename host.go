@@ -5,15 +5,12 @@ import (
 
 	peer "github.com/ipfs/go-libp2p-peer"
 	pstore "github.com/ipfs/go-libp2p-peerstore"
-	logging "github.com/ipfs/go-log"
 	ma "github.com/jbenet/go-multiaddr"
 	metrics "github.com/libp2p/go-libp2p-metrics"
 	inet "github.com/libp2p/go-libp2p-net"
 	protocol "github.com/libp2p/go-libp2p-protocol"
 	msmux "github.com/whyrusleeping/go-multistream"
 )
-
-var log = logging.Logger("github.com/libp2p/go-libp2p/p2p/host")
 
 // Host is an object participating in a p2p network, which
 // implements protocols or provides services. It handles
