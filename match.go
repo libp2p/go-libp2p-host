@@ -1,7 +1,7 @@
 package host
 
 import (
-	"github.com/libp2p/go-libp2p/p2p/protocol"
+	"github.com/libp2p/go-libp2p-protocol"
 	"strings"
 
 	semver "github.com/coreos/go-semver/semver"

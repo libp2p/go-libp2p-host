@@ -10,10 +10,10 @@ import (
 	logging "github.com/ipfs/go-log"
 	ma "github.com/jbenet/go-multiaddr"
 	goprocess "github.com/jbenet/goprocess"
+	protocol "github.com/libp2p/go-libp2p-protocol"
 	metrics "github.com/libp2p/go-libp2p/p2p/metrics"
 	mstream "github.com/libp2p/go-libp2p/p2p/metrics/stream"
 	inet "github.com/libp2p/go-libp2p/p2p/net"
-	protocol "github.com/libp2p/go-libp2p/p2p/protocol"
 	identify "github.com/libp2p/go-libp2p/p2p/protocol/identify"
 	relay "github.com/libp2p/go-libp2p/p2p/protocol/relay"
 

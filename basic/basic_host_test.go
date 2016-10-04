@@ -7,9 +7,9 @@ import (
 	"testing"
 	"time"
 
+	protocol "github.com/libp2p/go-libp2p-protocol"
 	host "github.com/libp2p/go-libp2p/p2p/host"
 	inet "github.com/libp2p/go-libp2p/p2p/net"
-	protocol "github.com/libp2p/go-libp2p/p2p/protocol"
 	testutil "github.com/libp2p/go-libp2p/p2p/test/util"
 )
 
