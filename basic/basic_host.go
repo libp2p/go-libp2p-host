@@ -5,17 +5,18 @@ import (
 	"io"
 	"time"
 
+	identify "github.com/libp2p/go-libp2p/p2p/protocol/identify"
+	relay "github.com/libp2p/go-libp2p/p2p/protocol/relay"
+
 	peer "github.com/ipfs/go-libp2p-peer"
 	pstore "github.com/ipfs/go-libp2p-peerstore"
 	logging "github.com/ipfs/go-log"
 	ma "github.com/jbenet/go-multiaddr"
 	goprocess "github.com/jbenet/goprocess"
+	metrics "github.com/libp2p/go-libp2p-metrics"
+	mstream "github.com/libp2p/go-libp2p-metrics/stream"
+	inet "github.com/libp2p/go-libp2p-net"
 	protocol "github.com/libp2p/go-libp2p-protocol"
-	metrics "github.com/libp2p/go-libp2p/p2p/metrics"
-	mstream "github.com/libp2p/go-libp2p/p2p/metrics/stream"
-	inet "github.com/libp2p/go-libp2p/p2p/net"
-	identify "github.com/libp2p/go-libp2p/p2p/protocol/identify"
-	relay "github.com/libp2p/go-libp2p/p2p/protocol/relay"
 
 	msmux "github.com/whyrusleeping/go-multistream"
 )

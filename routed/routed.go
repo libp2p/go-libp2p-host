@@ -5,16 +5,16 @@ import (
 	"fmt"
 	"time"
 
+	host "github.com/libp2p/go-libp2p/p2p/host"
+
 	lgbl "github.com/ipfs/go-libp2p-loggables"
 	peer "github.com/ipfs/go-libp2p-peer"
 	pstore "github.com/ipfs/go-libp2p-peerstore"
 	logging "github.com/ipfs/go-log"
 	ma "github.com/jbenet/go-multiaddr"
+	metrics "github.com/libp2p/go-libp2p-metrics"
+	inet "github.com/libp2p/go-libp2p-net"
 	protocol "github.com/libp2p/go-libp2p-protocol"
-	host "github.com/libp2p/go-libp2p/p2p/host"
-	metrics "github.com/libp2p/go-libp2p/p2p/metrics"
-	inet "github.com/libp2p/go-libp2p/p2p/net"
-
 	msmux "github.com/whyrusleeping/go-multistream"
 )
 
