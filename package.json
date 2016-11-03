@@ -49,6 +49,6 @@
   "license": "",
   "name": "go-libp2p-host",
   "releaseCmd": "git commit -a -m \"gx publish $VERSION\"",
-  "version": "1.1.0"
+  "version": "1.1.1"
 }
 
