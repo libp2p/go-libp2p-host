@@ -27,9 +27,9 @@
     },
     {
       "author": "whyrusleeping",
-      "hash": "QmWpTXhTkpoCDEm9twJd5Rc9jFwy61emzxneeJzrVMfjGF",
+      "hash": "QmVcNzHewFvmVah1CGqg8NV7nHHsPu19U43YE5b2oqWyBp",
       "name": "go-libp2p-metrics",
-      "version": "1.2.0"
+      "version": "1.5.0"
     },
     {
       "author": "whyrusleeping",
