@@ -3,7 +3,6 @@ package host
 import (
 	"context"
 
-	metrics "github.com/libp2p/go-libp2p-metrics"
 	inet "github.com/libp2p/go-libp2p-net"
 	peer "github.com/libp2p/go-libp2p-peer"
 	pstore "github.com/libp2p/go-libp2p-peerstore"
@@ -62,6 +61,4 @@ type Host interface {
 
 	// Close shuts down the host, its Network, and services.
 	Close() error
-
-	GetBandwidthReporter() metrics.Reporter
 }

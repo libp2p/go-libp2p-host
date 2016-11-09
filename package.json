@@ -27,12 +27,6 @@
     },
     {
       "author": "whyrusleeping",
-      "hash": "QmX4j1JhubdEt4EB1JY1mMKTvJwPZSRzTv3uwh5zaDqyAi",
-      "name": "go-libp2p-metrics",
-      "version": "1.6.0"
-    },
-    {
-      "author": "whyrusleeping",
       "hash": "QmZNkThpqfVXs9GNbexPrfBbXSLNYeKrE7jwFM2oqHbyqN",
       "name": "go-libp2p-protocol",
       "version": "1.0.0"
@@ -42,6 +36,12 @@
       "hash": "QmatJnBK2qyjcy1AYq4Gb5YH16YM7uibdteQ589r46YLvB",
       "name": "go-multistream",
       "version": "0.3.1"
+    },
+    {
+      "author": "whyrusleeping",
+      "hash": "QmU3pGGVT1riXp5dBJbNrGpxssVScfvk9236drRHZZbKJ1",
+      "name": "go-libp2p-net",
+      "version": "1.6.0"
     }
   ],
   "gxVersion": "0.9.1",
