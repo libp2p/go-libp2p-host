@@ -32,6 +32,7 @@ type Host interface {
 
 	// Mux returns the Mux multiplexing incoming streams to protocol handlers
 	Mux() *msmux.MultistreamMuxer
+	MsgMux() *msmux.MultigramMuxer
 
 	// Connect ensures there is a connection between this host and the peer with
 	// given peer.ID. Connect will absorb the addresses in pi into its internal
@@ -59,6 +60,11 @@ type Host interface {
 	// to create one. If ProtocolID is "", writes no header.
 	// (Threadsafe)
 	NewStream(ctx context.Context, p peer.ID, pids ...protocol.ID) (inet.Stream, error)
+
+	SetMsgHandler(pid protocol.ID, handler inet.MsgHandler)
+	SetMsgHandlerMatch(pid protocol.ID, match func(string) bool, handler inet.MsgHandler)
+	RemoveMsgHandler(pid protocol.ID)
+	WriteMsg(ctx context.Context, p peer.ID, pids ...protocol.ID, msg []byte)
 
 	// Close shuts down the host, its Network, and services.
 	Close() error
