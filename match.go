@@ -1,10 +1,10 @@
 package host
 
 import (
-	"github.com/libp2p/go-libp2p-protocol"
 	"strings"
 
 	semver "github.com/coreos/go-semver/semver"
+	"github.com/libp2p/go-libp2p-protocol"
 )
 
 func MultistreamSemverMatcher(base protocol.ID) (func(string) bool, error) {
