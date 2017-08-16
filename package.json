@@ -39,9 +39,9 @@
     },
     {
       "author": "whyrusleeping",
-      "hash": "QmZg566m6GTANKnweD63nLao2J5qgFVSKscHqrNyVUzwDA",
+      "hash": "QmdjeSxRchVsQ2ftrZyvVmFqoJ1QbJZ2PgugBsZ58TZZqQ",
       "name": "go-libp2p-connmgr",
-      "version": "0.1.1"
+      "version": "0.1.2"
     },
     {
       "author": "whyrusleeping",
@@ -61,6 +61,6 @@
   "license": "",
   "name": "go-libp2p-host",
   "releaseCmd": "git commit -a -m \"gx publish $VERSION\"",
-  "version": "1.3.17"
+  "version": "1.3.18"
 }
 
