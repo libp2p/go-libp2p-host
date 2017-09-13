@@ -33,15 +33,15 @@
     },
     {
       "author": "whyrusleeping",
-      "hash": "QmahYsGWry85Y7WUe2SX5G4JkH2zifEQAUtJVLZ24aC9DF",
+      "hash": "QmNa31VPzC561NWwRsJLE7nGYZYuuD2QfpK2b1q9BK54J1",
       "name": "go-libp2p-net",
-      "version": "1.6.12"
+      "version": "2.0.0"
     },
     {
       "author": "whyrusleeping",
-      "hash": "QmTuwwqGf4NH2Jj3opKtaKx45ge4RiXSCtvUkb7a4gk2ua",
+      "hash": "QmYUpfXEBqLdtiSUDzzc8hLfcELPHiPtANF12EpEX1WCVB",
       "name": "go-libp2p-connmgr",
-      "version": "0.1.3"
+      "version": "0.2.0"
     },
     {
       "author": "whyrusleeping",
@@ -61,6 +61,6 @@
   "license": "",
   "name": "go-libp2p-host",
   "releaseCmd": "git commit -a -m \"gx publish $VERSION\"",
-  "version": "1.3.19"
+  "version": "2.0.0"
 }
 
