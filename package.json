@@ -51,9 +51,9 @@
     },
     {
       "author": "why",
-      "hash": "QmV9wgUbta6AuCfdUuw82K97YrskztGTAXHjQrTQ3vdXmu",
+      "hash": "QmYkCrTwivapqdB3JbwvwvxymseahVkcm46ThRMAA24zCr",
       "name": "go-libp2p-interface-connmgr",
-      "version": "0.0.1"
+      "version": "0.0.2"
     }
   ],
   "gxVersion": "0.9.1",
@@ -61,6 +61,6 @@
   "license": "",
   "name": "go-libp2p-host",
   "releaseCmd": "git commit -a -m \"gx publish $VERSION\"",
-  "version": "2.1.0"
+  "version": "2.1.1"
 }
 
