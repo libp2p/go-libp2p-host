@@ -27,9 +27,9 @@
     },
     {
       "author": "whyrusleeping",
-      "hash": "QmbXRda5H2K3MSQyWWxTMtd8DWuguEBUCe6hpxfXVpFUGj",
+      "hash": "QmTqzRAc6S8DVpDRaePagPYyFYiXqhiFXwDjTFzfH6J99v",
       "name": "go-multistream",
-      "version": "0.3.7"
+      "version": "0.3.8"
     },
     {
       "author": "whyrusleeping",
@@ -61,6 +61,6 @@
   "license": "",
   "name": "go-libp2p-host",
   "releaseCmd": "git commit -a -m \"gx publish $VERSION\"",
-  "version": "3.0.5"
+  "version": "3.0.6"
 }
 
