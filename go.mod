@@ -1,13 +1,7 @@
 module github.com/libp2p/go-libp2p-host
 
 require (
-	github.com/coreos/go-semver v0.2.1-0.20180108230905-e214231b295a
-	github.com/libp2p/go-libp2p v0.0.11
-	github.com/libp2p/go-libp2p-interface-connmgr v0.0.1
-	github.com/libp2p/go-libp2p-net v0.0.2
-	github.com/libp2p/go-libp2p-peer v0.0.1
-	github.com/libp2p/go-libp2p-peerstore v0.0.1
-	github.com/libp2p/go-libp2p-protocol v0.0.1
-	github.com/multiformats/go-multiaddr v0.0.1
-	github.com/multiformats/go-multistream v0.0.1
+	github.com/libp2p/go-libp2p-core v0.0.0-20190416150442-54a1b70f07da
+	golang.org/x/crypto v0.0.0-20190228161510-8dd112bcdc25 // indirect
+	golang.org/x/sys v0.0.0-20190228124157-a34e9553db1e // indirect
 )
