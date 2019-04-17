@@ -2,6 +2,8 @@ package host
 
 import (
 	"github.com/libp2p/go-libp2p-core/helpers"
+	"github.com/libp2p/go-libp2p-core/peer"
+	"github.com/libp2p/go-libp2p-core/protocol"
 
 	moved "github.com/libp2p/go-libp2p-core/host"
 )
@@ -10,7 +12,11 @@ import (
 type Host = moved.Host
 
 // Deprecated: github.com/libp2p/go-libp2p-core/peer.InfoFromHost.
-var PeerInfoFromHost = moved.InfoFromHost
+func PeerInfoFromHost(h Host) *peer.Info {
+	return moved.InfoFromHost(h)
+}
 
-// Deprecated: use helpers.MultistreamSemverMatcher.
-var MultistreamSemverMatcher = helpers.MultistreamSemverMatcher
+// Deprecated: use github.com/libp2p/go-libp2p-core/helpers.MultistreamSemverMatcher.
+func MultistreamSemverMatcher(base protocol.ID) (func(string) bool, error) {
+	return helpers.MultistreamSemverMatcher(base)
+}
