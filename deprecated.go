@@ -12,7 +12,7 @@ import (
 type Host = core.Host
 
 // Deprecated: github.com/libp2p/go-libp2p-core/peer.InfoFromHost.
-func PeerInfoFromHost(h Host) *peer.Info {
+func PeerInfoFromHost(h Host) *peer.AddrInfo {
 	return core.InfoFromHost(h)
 }
 
